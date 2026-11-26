@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174a5b">
+  <meta name="description" content="Crea, desa i exporta situacions d’aprenentatge de matemàtiques per a l’ESO.">
+  <title>Situacions d’aprenentatge · Matemàtiques ESO</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inici" aria-label="Inici">∑ <span>Aula Matemàtica</span></a>
+    <nav aria-label="Navegació principal">
+      <a href="#editor">Crear situació</a>
+      <a href="#desades">Les meves situacions</a>
+    </nav>
+  </header>
+
+  <main id="inici">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Eina docent · Educació secundària obligatòria</p>
+        <h1>Dissenya situacions d’aprenentatge de matemàtiques</h1>
+        <p>Organitza el repte, les competències, les sessions i l’avaluació en un sol document. Desa’l al navegador o exporta’l en JSON.</p>
+        <a class="button button-light" href="#editor">Comença a crear <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-mark" aria-hidden="true">π<br><span>× ÷ + −</span></div>
+    </section>
+
+    <section class="content-section" id="editor">
+      <div class="section-heading">
+        <div><p class="eyebrow">Planificació</p><h2 id="form-title">Nova situació d’aprenentatge</h2></div>
+        <button class="button button-quiet" id="example-button" type="button">Carrega un exemple</button>
+      </div>
+      <form id="situation-form">
+        <input type="hidden" id="edit-id">
+        <fieldset>
+          <legend><span>1</span> Informació bàsica</legend>
+          <div class="form-grid">
+            <label class="wide">Títol de la situació *<input id="title" name="title" required maxlength="120" placeholder="Ex.: Un pati més sostenible" autocomplete="off"></label>
+            <label>Curs *<select id="course" name="course" required><option value="">Selecciona el curs</option><option>1r d’ESO</option><option>2n d’ESO</option><option>3r d’ESO</option><option>4t d’ESO</option><option>Adaptable a diversos cursos</option></select></label>
+            <label>Durada aproximada<input id="duration" name="duration" placeholder="Ex.: 6 sessions de 55 minuts"></label>
+            <label>Matèria<input id="subject" name="subject" value="Matemàtiques"></label>
+            <label>Àmbit o matèries vinculades<input id="area" name="area" placeholder="Ex.: Tecnologia i Ciències"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>2</span> Context i repte</legend>
+          <div class="form-grid">
+            <label class="wide">Context / situació de partida<textarea id="context" rows="3" placeholder="Quina situació real o propera a l’alumnat plantegem?"></textarea></label>
+            <label class="wide">Repte o pregunta guia<textarea id="challenge" rows="2" placeholder="Què haurà de resoldre o investigar l’alumnat?"></textarea></label>
+            <label class="wide">Producte final o evidència<textarea id="product" rows="2" placeholder="Ex.: una proposta amb pressupost, una infografia o una presentació"></textarea></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>3</span> Aprenentatges</legend>
+          <div class="form-grid">
+            <label>Competències específiques<textarea id="competencies" rows="4" placeholder="Una per línia"></textarea></label>
+            <label>Criteris d’avaluació<textarea id="criteria" rows="4" placeholder="Una per línia; indica què observaràs"></textarea></label>
+            <label>Sabers / continguts<textarea id="knowledge" rows="4" placeholder="Ex.: proporcionalitat, estadística, geometria…"></textarea></label>
+            <label>Objectius d’aprenentatge<textarea id="objectives" rows="4" placeholder="En acabar, l’alumnat serà capaç de…"></textarea></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>4</span> Desenvolupament i avaluació</legend>
+          <div class="form-grid">
+            <label class="wide">Seqüència de sessions<textarea id="sessions" rows="5" placeholder="Sessió 1: activació i presentació del repte&#10;Sessió 2: recerca i càlculs…"></textarea><small>Descriu les activitats en ordre, una per línia.</small></label>
+            <label>Metodologia i agrupaments<textarea id="methodology" rows="3" placeholder="Ex.: treball cooperatiu en grups de 4"></textarea></label>
+            <label>Mesures d’inclusió i accessibilitat<textarea id="inclusion" rows="3" placeholder="Suports, opcions i ajustos per facilitar la participació"></textarea></label>
+            <label>Instruments d’avaluació<textarea id="assessment" rows="3" placeholder="Ex.: rúbrica, observació, autoavaluació"></textarea></label>
+            <label>Recursos necessaris<textarea id="resources" rows="3" placeholder="Materials, eines digitals, espais…"></textarea></label>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <p class="form-note">* Camps obligatoris. Les situacions es desen només en aquest navegador.</p>
+          <div><button class="button button-quiet" id="cancel-edit" type="button" hidden>Cancel·la l’edició</button><button class="button button-primary" type="submit" id="save-button">Desa la situació</button></div>
+        </div>
+        <p class="status-message" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="content-section saved-section" id="desades">
+      <div class="section-heading">
+        <div><p class="eyebrow">Biblioteca personal</p><h2>Les meves situacions</h2></div>
+        <div class="toolbar">
+          <button class="button button-quiet" id="import-button" type="button">Importa JSON</button>
+          <input id="import-file" type="file" accept=".json,application/json" hidden>
+          <button class="button button-quiet" id="export-all" type="button">Exporta-les totes</button>
+        </div>
+      </div>
+      <div id="situation-list" class="situation-list" aria-live="polite"></div>
+      <p class="privacy-note">Les dades queden desades al navegador d’aquest dispositiu. Exporta-les en JSON per fer-ne una còpia o compartir-les.</p>
+    </section>
+  </main>
+
+  <footer><span>Aula Matemàtica</span><span>Planifica · Experimenta · Aprèn</span></footer>
+</body>
+</html>
